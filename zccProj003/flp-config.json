@@ -1,0 +1,36 @@
+{
+    "application": {
+        "id": "",
+        "title": "Purchasing Mass Inquiry",
+        "description": "Purchasing Mass Inquiry",
+        "type": "SAP_UI5_Component",
+        "componentUrl": "/",
+        "appUrl": "#zccProj003-Display",
+        "navigationComponentName": "sap.traning.zccProj003",
+        "intentSemanticObject": "zccProj003",
+        "intentAction": "Display",
+        "html5ApplicationName": "zccproj003",
+        "HCPParentApplicationName": ""
+    },
+    "assignment": {
+        "groups": [
+            "4cec6273-b671-460e-8f44-c4ea7bf36694-1572917972572"
+        ],
+        "contentPackages": [
+            "2cc07021-14dc-4151-9342-3d4007712a1b"
+        ],
+        "categories": []
+    },
+    "tile": {
+        "type": "DynamicTile",
+        "title": "Purchasing Report",
+        "subtitle": "Purchasing Details Report",
+        "searchKeywords": "Purchasing Report,Purchasing Details Report",
+        "displayIconUrl": "sap-icon://list",
+        "displayInfoText": "",
+        "size": "1x1",
+        "serviceURL": "/sap/fiori/zccproj003/ZCCMMV003/ZCCMMV003/$count",
+        "refreshInterval": 10,
+        "displayNumberUnit": ""
+    }
+}

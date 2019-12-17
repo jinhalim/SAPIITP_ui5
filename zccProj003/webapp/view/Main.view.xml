@@ -1,0 +1,338 @@
+<mvc:View xmlns:fb="sap.ui.comp.filterbar" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.f" xmlns:l="sap.ui.layout" controllerName="sap.traning.zccProj003.controller.Main" displayBlock="true" height="100%">
+		<HBox width="100%" id="hbox0">		
+			<items>	
+			<RadioButtonGroup id="GroupA" columns="3" select="onSearch">
+				<buttons>
+				<RadioButton groupName="GroupA" text="ALL" id="button0" selected="true"/>		
+				<RadioButton groupName="GroupA" text="Open PO" id="button1"/>		
+				<RadioButton groupName="GroupA" text="납품완료표시" id="button2"/>
+				</buttons>
+			</RadioButtonGroup>
+			</items>		
+		</HBox>	
+		<l:VerticalLayout width="100%">
+			<fb:FilterBar id="filterBar" header="구매현황 Report" reset="onReset" search="onSearch" clear="onClear" showFilterConfiguration="false">
+			<fb:filterGroupItems>
+				<fb:FilterGroupItem groupName="__$INTERNAL$" name="A" label="PO Number" partOfCurrentVariant="true" visibleInFilterBar="true">
+					<fb:control>
+						<SearchField placeholder="Search for ..." id="field1" width="100%" enableSuggestions="true" suggest="onSuggest" search="onSearch"
+						suggestionItems="{
+							path: '/ZCCMMV003',
+							sorter: { path: 'EBELN' }
+						}">
+						<suggestionItems>
+							<SuggestionItem text="{EBELN}" description="{path:'BEDAT'}" key="{EBELN}"/>
+						</suggestionItems>
+						</SearchField>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="자재코드" partOfCurrentVariant="true" visibleInFilterBar="true">
+					<fb:control>
+						<SearchField placeholder="Search for ..." id="field2" width="100%" search="onSearch"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+	
+				<fb:FilterGroupItem groupName="__$INTERNAL$" name="C" label="공급업체" partOfCurrentVariant="true" visibleInFilterBar="true">
+					<fb:control>
+						<SearchField placeholder="Search for ..." id="field3" width="100%" search="onSearch"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem groupName="__$INTERNAL$" name="D" label="발주일자" partOfCurrentVariant="true" visibleInFilterBar="true">
+					<fb:control>
+						<DatePicker id="DP1" width="100%" displayFormat="yyyyMMdd" valueFormat="yyyyMMdd"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+				<fb:FilterGroupItem groupName="__$INTERNAL$" name="E" label="납품일자" partOfCurrentVariant="true" visibleInFilterBar="true">
+					<fb:control>
+						<DatePicker id="DP2" width="100%" valueFormat="yyyyMMdd" displayFormat="yyyyMMdd"/>
+					</fb:control>
+				</fb:FilterGroupItem>
+			</fb:filterGroupItems>				
+			</fb:FilterBar>
+		</l:VerticalLayout>
+		<!--cellClick="onRow"-->
+		<Table xmlns="sap.ui.table" xmlns:m="sap.m" selectionMode="Single" selectionBehavior="RowOnly" id="ZCCMMV003" rows="{/ZCCMMV003}" rowSelectionChange="onRow" visibleRowCount="12" minAutoRowCount="5" visibleRowCountMode="Interactive" class="sapFDynamicPageAlignContent">
+				<toolbar>
+					<m:OverflowToolbar>
+						
+						<m:Button text="Reset" icon="sap-icon://delete" tooltip="Reset Filters" press="onClear"/>
+						<m:Button text="Clear sortings" icon="sap-icon://decline" tooltip="Clear all sortings" press="clearAllSortings"/>
+						<!--<m:ToolbarSpacer/>-->
+						<!--<m:Button-->
+						<!--	text="Info"-->
+						<!--	icon="sap-icon://hint"-->
+						<!--	tooltip="Show information"-->
+						<!--	press="showInfo"/>-->
+					</m:OverflowToolbar>
+				</toolbar>
+				<columns>
+				    <Column width="8rem" sortProperty="EBELN" >
+						<m:Label text="PO Number"/>
+						<template>
+							<m:Text text="{EBELN}"/>
+						</template>
+					</Column>
+					<Column width="7rem" sortProperty="MATNR">
+						<m:Label text="자재번호"/>
+						<template>
+							<m:Text text="{MATNR}"/>
+						</template>
+					</Column>
+					<Column width="7rem" sortProperty="LIFNR">
+						<m:Label text="공급업체번호"/>
+						<template>
+							<m:Text text="{LIFNR}"/>
+						</template>
+					</Column>
+					<Column width="10rem" sortProperty="BEDAT">
+						<m:Label text="구매오더생성일자"/>
+						<template> 
+							<m:Text text="{
+								path: 'BEDAT',
+								type: 'sap.ui.model.type.Date',
+								formatOptions: {
+									style: 'long',
+									source: {
+										pattern: 'yyyyMMdd'
+									}
+								}}" />
+						</template>
+					</Column>
+					<Column width="10rem" sortProperty="ELDAT">
+						<m:Label text="납품입고일자"/>
+						<template>
+							<m:Text text="{
+								path: 'ELDAT',
+								type: 'sap.ui.model.type.Date',
+								formatOptions: {
+									style: 'long',
+									source: {
+										pattern: 'yyyyMMdd'
+									}
+								}}" />
+							
+						</template>
+					</Column>
+					<Column width="13rem">
+						<m:Label text="Delivery Completed indicator"/>
+						<template>
+							<m:Text text="{ELIKZ}"/>
+						</template>
+					</Column>
+					<Column width="7rem">
+						<m:Label text="Final Invoice"/>
+						<template>
+							<m:Text text="{EREKZ}"/>
+						</template>
+					</Column>
+					<Column width="3rem">
+						<m:Label text="G/R"/>
+						<template>
+							<m:Text text="{WEPOS}" />
+						</template>
+					</Column>
+					<Column width="3rem">
+						<m:Label text="I/R"/>
+						<template>
+							<m:Text text="{REPOS}" />
+						</template>
+					</Column>
+					<Column width="7rem">
+						<m:Label text="PO 삭제여부"/>
+						<template>
+							<m:Text text="{LOEKZ}"/>
+						</template>
+					</Column>
+				
+					<Column width="15rem" sortProperty="TXZ01">
+						<m:Label text="자재명"/>
+						<template>
+							<m:Text text="{TXZ01}" />
+						</template>
+					</Column>
+					<Column width="10rem" sortProperty="EBELP">
+						<m:Label text="구매오더품목항번"/>
+						<template>
+							<m:Text text="{EBELP}" />
+						</template>
+					</Column>
+					<Column width="14rem" sortProperty="ETENR">
+						<m:Label text="Delivery Schedule Line Counter"/>
+						<template>
+							<m:Text text="{ETENR}"/>
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="BUKRS">
+						<m:Label text="회사코드"/>
+						<template>
+							<m:Text text="{BUKRS}" />
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="WERKS">
+						<m:Label text="플랜트"/>
+						<template>
+							<m:Text text="{WERKS}" />
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="LGORT">
+						<m:Label text="저장위치"/>
+						<template>
+							<m:Text text="{LGORT}" />
+						</template>
+					</Column>
+					<Column width="7rem" sortProperty="BSTYP">
+						<m:Label text="PO Ref 유형"/>
+						<template>
+							<m:Text text="{BSTYP}" />
+						</template>
+					</Column>
+					<Column width="11rem" sortProperty="BSART">
+						<m:Label text="Purchasing doc type"/>
+						<template>
+							<m:Text text="{BSART}" />
+						</template>
+					</Column>
+					<Column width="10rem" sortProperty="AEDAT">
+						<m:Label text="구매오더변경일자"/>
+						<template>
+							<m:Text text="{AEDAT}"/>
+								<m:Text text="{
+								path: 'AEDAT',
+								type: 'sap.ui.model.type.Date',
+								formatOptions: {
+									style: 'long',
+									source: {
+										pattern: 'yyyyMMdd'
+									}
+								}}" />
+						</template>
+					</Column>
+					<Column width="7rem" sortProperty="ERNAM">
+						<m:Label text="PO 발행인"/>
+						<template>
+							 <m:Text text="{ERNAM}"/>
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="EKORG">
+						<m:Label text="구매조직"/>
+						<template>
+							<m:Text text="{EKORG}"/>
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="EKGRP">
+						<m:Label text="구매그룹"/>
+						<template>
+							<m:Text text="{EKGRP}"/>
+						</template>
+					</Column>
+					
+					<Column width="5rem" sortProperty="MTART">
+						<m:Label text="자재유형"/>
+						<template>
+							<m:Text text="{MTART}"/>
+						</template>
+					</Column>
+					
+					<Column width="5rem" sortProperty="EMATN">
+						<m:Label text="자재번호"/>
+						<template>
+							<m:Text text="{EMATN}"/>
+						</template>
+					</Column>
+					
+					<Column width="5rem" sortProperty="MATKL">
+						<m:Label text="자재그룹"/>
+						<template>
+							<m:Text text="{MATKL}" />
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="MENGE">
+						<m:Label text="발주수량"/>
+						<template>
+							 <m:Text text="{MENGE}" />
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="MEINS">
+						<m:Label text="수량단위"/>
+						<template>
+							<m:Text text="{MEINS}" />
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="NETPR">
+						<m:Label text="단가"/>
+						<template>
+							<m:Text text="{NETPR}"/>
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="BRTWR">
+						<m:Label text="총구매금액"/>
+						<template>
+							<m:Text text="{BRTWR}" />
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="NETWR">
+						<m:Label text="순 발주금액"/>
+						<template>
+							<m:Text text="{NETWR}" />
+						</template>
+					</Column>
+					<Column width="5rem" sortProperty="WAERS">
+						<m:Label text="통화단위"/>
+						<template>
+							<m:Text text="{WAERS}" />
+						</template>
+					</Column>
+					<Column width="9rem" sortProperty="INFNR">
+						<m:Label text="구매 Info record"/>
+						<template>
+							<m:Text text="{INFNR}" />
+						</template>
+					</Column>
+					<Column width="9rem" sortProperty="BANFN">
+						<m:Label text="구매요청번호"/>
+						<template>
+							<m:Text text="{BANFN}"/>
+						</template>
+					</Column>
+					<Column width="7rem" sortProperty="BNFPO">
+						<m:Label text="PR 품목 항번"/>
+						<template>
+							<m:Text text="{BNFPO}" />
+						</template>
+					</Column>
+					<Column width="10rem" sortProperty="VGABE">
+						<m:Label text="구매 거래 유형"/>
+						<template>
+							<m:Text text="{VGABE}"/>
+						</template>
+					</Column>
+					<Column width="10rem" sortProperty="BELNR">
+						<m:Label text="Material doc. 번호"/>
+						<template>
+							<m:Text text="{BELNR}" />
+						</template>
+					</Column>
+					<Column width="10rem" sortProperty="EINDT">
+						<m:Label text="납품예정일자"/>
+						<template>
+							<m:Text text="{EINDT}" />
+								<m:Text text="{
+								path: 'EINDT',
+								type: 'sap.ui.model.type.Date',
+								formatOptions: {
+									style: 'long',
+									source: {
+										pattern: 'yyyyMMdd'
+									}
+								}}" />
+						</template>
+					</Column>
+					<Column width="7rem" sortProperty="WEMNG">
+						<m:Label text="납품입고수량"/>
+						<template>
+							<m:Text text="{WEMNG}"/>
+						</template>
+					</Column>
+				</columns>	
+	</Table>
+</mvc:View>
